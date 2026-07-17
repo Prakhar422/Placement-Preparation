@@ -130,7 +130,7 @@ MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/prepsphere
 # Authentication
 JWT_SECRET=your_jwt_signing_secret_key
 
-# Frontend URL
+# Frontend API URL
 CLIENT_URL=http://localhost:5173
 
 # Google OAuth
