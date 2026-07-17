@@ -84,6 +84,14 @@ Client-side navigation is managed declaratively using `react-router-dom`:
 
 ---
 
+## ⚙️ Environment Variables
+
+Create a `.env` file in the root of the `Frontend/` folder:
+
+```env
+# Backend URL
+VITE_API_URL=http://localhost:5000/api
+```
 
 
 ## 🛠️ Commands

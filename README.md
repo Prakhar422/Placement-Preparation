@@ -110,8 +110,15 @@ cd PrepSphere-AI
 
 ## 🔌 Environment Variables
 
+You must set up `.env` files in the `Frontend/` directories.
 You must set up `.env` files in the `Backend/` directories.
 
+
+### Frontend (`Frontend/.env`)
+```env
+# Backend URL
+VITE_API_URL=http://localhost:5000/api
+```
 
 
 ### Backend (`Backend/.env`)
