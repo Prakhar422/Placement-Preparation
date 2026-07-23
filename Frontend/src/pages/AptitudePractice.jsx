@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Brain,
   FileSearch,
@@ -482,6 +482,36 @@ const AptitudePractice = () => {
     }
   }, [view, submitActiveQuiz]);
 
+  // Options selections
+  const handleSelectOption = useCallback((optionKey) => {
+    if (timeLeft <= 0) return;
+    setAnswers((prev) => ({
+      ...prev,
+      [currentQuestionIdx]: optionKey,
+    }));
+    // Remove from skipped list when answered
+    if (skippedQuestions[currentQuestionIdx]) {
+      setSkippedQuestions((prev) => {
+        const copy = { ...prev };
+        delete copy[currentQuestionIdx];
+        return copy;
+      });
+    }
+  }, [timeLeft, currentQuestionIdx, skippedQuestions]);
+
+  // Navigations inside the quiz
+  const handleNextQuestion = useCallback(() => {
+    if (currentQuestionIdx < 9) {
+      setCurrentQuestionIdx((prev) => prev + 1);
+    }
+  }, [currentQuestionIdx]);
+
+  const handlePrevQuestion = useCallback(() => {
+    if (currentQuestionIdx > 0) {
+      setCurrentQuestionIdx((prev) => prev - 1);
+    }
+  }, [currentQuestionIdx]);
+
   // Keyboard accessibility listeners (Quiz Screen only)
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -514,35 +544,7 @@ const AptitudePractice = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [view, currentQuestionIdx, answers, submitActiveQuiz, handleNextQuestion, handlePrevQuestion, handleSelectOption]);
 
-  // Options selections
-  const handleSelectOption = useCallback((optionKey) => {
-    if (timeLeft <= 0) return;
-    setAnswers((prev) => ({
-      ...prev,
-      [currentQuestionIdx]: optionKey,
-    }));
-    // Remove from skipped list when answered
-    if (skippedQuestions[currentQuestionIdx]) {
-      setSkippedQuestions((prev) => {
-        const copy = { ...prev };
-        delete copy[currentQuestionIdx];
-        return copy;
-      });
-    }
-  }, [timeLeft, currentQuestionIdx, skippedQuestions]);
-
-  // Navigations inside the quiz
-  const handleNextQuestion = useCallback(() => {
-    if (currentQuestionIdx < 9) {
-      setCurrentQuestionIdx((prev) => prev + 1);
-    }
-  }, [currentQuestionIdx]);
-
-  const handlePrevQuestion = useCallback(() => {
-    if (currentQuestionIdx > 0) {
-      setCurrentQuestionIdx((prev) => prev - 1);
-    }
-  }, [currentQuestionIdx]);
+  
 
   const handleSkipQuestion = () => {
     setSkippedQuestions((prev) => ({

@@ -10,7 +10,7 @@ import {
   deleteInterview as apiDeleteInterview
 } from "../services/interviewService";
 import { getAdaptiveMetrics } from "../utils/reportPdfGenerator";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { jsPDF } from "jspdf";
 import {
   ResponsiveContainer,
