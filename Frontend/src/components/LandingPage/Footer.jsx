@@ -1,25 +1,45 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Linkedin, Github, Twitter, Instagram, Heart, Sparkles } from "lucide-react";
 
 const Footer = () => {
   const productLinks = [
-    { label: "Features", href: "#" },
-    { label: "Resume Analyzer", href: "#" },
-    { label: "AI Interview Coach", href: "#" },
-    { label: "Coding Arena", href: "#" },
-    { label: "Career Analytics", href: "#" },
-  ];
+  
+  { label: "Resume Analyzer", type: "route", target: "/login" },
+  { label: "Aptitude Practice", type: "route", target: "/login" },
+  { label: "AI Interview Coach", type: "route", target: "/login" },
+  { label: "Coding Arena", type: "route", target: "/login" },
+  { label: "Career Analytics", type: "route", target: "/login" },
+];
 
-  const resourceLinks = [
-    { label: "Interview Experiences", href: "#" },
-    { label: "Placement Guides", href: "#" },
-    { label: "Blog", href: "#" },
-    { label: "FAQs", href: "#" },
-    { label: "Documentation", href: "#" },
-  ];
+const resourceLinks = [
+  { label: "About Us", 
+type: "scroll", target: "hero"
+   },
+  {
+    label: "Features",
+    type: "scroll",
+    target: "features",
+  },
+  {
+    label: "Interview Experiences",
+    type: "route",
+    target: "/login",
+  },
+  {
+    label: "Placement Guides",
+    type: "route",
+    target: "/login",
+  },
+  {
+    label: "FAQs",
+    type: "scroll",
+    target: "resources",
+  },
+];
 
   const companyLinks = [
-    { label: "About Us", href: "#" },
+    
     { label: "Contact", href: "#" },
     { label: "Careers", href: "#" },
     { label: "Privacy Policy", href: "#" },
@@ -32,6 +52,24 @@ const Footer = () => {
     { icon: Twitter, href: "#", label: "Twitter", color: "hover:text-[#1DA1F2] hover:shadow-[0_0_20px_rgba(29,161,242,0.45)] hover:border-[#1DA1F2]/30" },
     { icon: Instagram, href: "#", label: "Instagram", color: "hover:text-[#E1306C] hover:shadow-[0_0_20px_rgba(225,48,108,0.45)] hover:border-[#E1306C]/30" }
   ];
+
+  const scrollToSection = (id) => {
+  document.getElementById(id)?.scrollIntoView({
+    behavior: "smooth",
+  });
+};
+
+ const navigate = useNavigate();
+
+  const handleNavigation = (link) => {
+    if (link.type === "scroll") {
+      document.getElementById(link.target)?.scrollIntoView({
+        behavior: "smooth",
+      });
+    } else if (link.type === "route") {
+      navigate(link.target);
+    }
+  };
 
   return (
     <>
@@ -111,15 +149,15 @@ const Footer = () => {
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">Product</h4>
               <ul className="space-y-3">
                 {productLinks.map((link, idx) => (
-                  <li key={idx}>
-                    <a
-                      href={link.href}
-                      className="text-[13px] font-light text-slate-400 hover:text-indigo-400 transition-colors duration-200 hover:pl-0.5"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
+  <li key={idx}>
+    <button
+      onClick={() => handleNavigation(link)}
+      className="cursor-pointer text-[13px] font-light text-slate-400 hover:text-indigo-400 transition-colors duration-200 hover:pl-0.5"
+    >
+      {link.label}
+    </button>
+  </li>
+))}
               </ul>
             </div>
 
@@ -127,17 +165,17 @@ const Footer = () => {
             <div className="lg:col-span-3 space-y-4">
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">Resources</h4>
               <ul className="space-y-3">
-                {resourceLinks.map((link, idx) => (
-                  <li key={idx}>
-                    <a
-                      href={link.href}
-                      className="text-[13px] font-light text-slate-400 hover:text-indigo-400 transition-colors duration-200 hover:pl-0.5"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+  {resourceLinks.map((link, idx) => (
+    <li key={idx}>
+      <button
+        onClick={() => handleNavigation(link)}
+        className="cursor-pointer text-[13px] font-light text-slate-400 hover:text-indigo-400 transition-colors duration-200 hover:pl-0.5"
+      >
+        {link.label}
+      </button>
+    </li>
+  ))}
+</ul>
             </div>
 
             {/* Column 4: Company (occupies 3 spans out of 12) */}
